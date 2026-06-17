@@ -5,6 +5,9 @@ src = "src"
 
 [preprocessor.tree-sitter]
 # Macaulay2 is bundled, so `m2` / `macaulay2` blocks work with no further setup.
+# Set `bundled = false` to ignore the bundled grammar and highlight only the
+# languages configured below.
+#
 # To add another language, point at a compiled parser and a highlights query:
 #
 # [preprocessor.tree-sitter.languages.nix]

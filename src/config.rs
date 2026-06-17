@@ -21,11 +21,25 @@ use serde::Deserialize;
 
 /// Parsed preprocessor configuration. Unknown keys (e.g. mdBook's own
 /// `command`, `renderers`) are ignored.
-#[derive(Debug, Default, Deserialize)]
+#[derive(Debug, Deserialize)]
+#[serde(default)]
 pub struct Config {
     /// User-added languages, keyed by language name.
-    #[serde(default)]
     pub languages: HashMap<String, LanguageConfig>,
+    /// Whether grammars compiled into the binary (e.g. the bundled Macaulay2)
+    /// are offered. Set `bundled = false` in `book.toml` to ignore them and
+    /// highlight only the languages configured here. A binary built with
+    /// `--no-default-features` carries no bundled grammars regardless.
+    pub bundled: bool,
+}
+
+impl Default for Config {
+    fn default() -> Self {
+        Self {
+            languages: HashMap::new(),
+            bundled: true,
+        }
+    }
 }
 
 /// One dynamically loaded grammar.

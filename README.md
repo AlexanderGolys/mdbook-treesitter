@@ -49,6 +49,24 @@ Copy [`assets/tree-sitter.css`](assets/tree-sitter.css) to your book's
 `theme/tree-sitter.css` (or wherever `additional-css` points) and adjust the
 colours to taste. See [`example/`](example/) for a complete, buildable book.
 
+## Opting out of the bundled grammar
+
+Macaulay2 is bundled only as a convenience. There are two ways to drop it:
+
+- **Per book, no rebuild** — set `bundled = false` to ignore every grammar
+  compiled into the binary and highlight only the languages you configure:
+
+  ```toml
+  [preprocessor.tree-sitter]
+  bundled = false
+  ```
+
+- **Per binary** — `cargo install --no-default-features` builds a
+  language-agnostic binary that carries no grammar at all.
+
+A configured language always overrides a bundled grammar that shares an alias,
+so you can also just replace `m2` rather than disabling it.
+
 ## Adding a language
 
 Bundled grammars need no configuration. Any other language is added by pointing

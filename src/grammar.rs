@@ -130,7 +130,12 @@ impl Registry {
             registry.insert(grammar, aliases.iter().map(String::as_str));
         }
 
-        for builtin in builtins::all() {
+        let builtins = if config.bundled {
+            builtins::all()
+        } else {
+            Vec::new()
+        };
+        for builtin in builtins {
             if builtin
                 .aliases
                 .iter()
