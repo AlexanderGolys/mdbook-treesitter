@@ -1,23 +1,26 @@
-# Example: multiple languages and injection
+# Example book
 
-A small book that exercises `mdbook-treesitter` across several grammars:
+A buildable book that doubles as the project's documentation site, a usage
+example, and an integration test across several grammars. Its chapters are:
 
-- **Chapter 1** — two Macaulay2 blocks, one well-formed and one with a syntax
-  error (which still highlights, since tree-sitter recovers).
-- **Chapter 2** — one block each in Macaulay2, Rust, Lua, Haskell and Markdown,
-  every grammar loaded dynamically.
-- **Chapter 3** — a Markdown block containing embedded `lua` and `c` blocks. Lua
-  is configured and gets injected/highlighted; C is not configured and is left
-  as plain text (an unregistered injected language degrades gracefully).
+- **Introduction** — the root [`README.md`](../../README.md), pulled in with
+  `{{#include}}` (the file stays at the repo root; nothing is copied).
+- **Highlighting demos** — one chapter per feature, each explaining itself above
+  the code:
+  - *Macaulay2* — a well-formed block and one with a syntax error (which still
+    highlights, since tree-sitter recovers).
+  - *Five languages* — one block each in Macaulay2, Rust, Lua, Haskell and
+    Markdown.
+  - *Injection* — a Markdown block with embedded `lua` (configured, so it is
+    sub-highlighted) and `c` (not configured, so it degrades to plain text).
+- **Contributing** — the root [`CONTRIBUTING.md`](../../CONTRIBUTING.md), also
+  via `{{#include}}`.
 
-Grammars are external — compiled parsers and third-party queries — so they are
-not committed. [`setup.sh`](setup.sh) stages them into `parsers/` and `queries/`
+Grammars are external (compiled parsers + third-party queries), so they are not
+committed. [`setup.sh`](setup.sh) stages them into `parsers/` and `queries/`
 (both gitignored), copying from a local nvim-treesitter install by default.
 
 ```sh
 ./setup.sh          # stage parsers + queries (override sources via env vars)
 mdbook build        # uses the mdbook-treesitter binary on your PATH
 ```
-
-See [`setup.sh`](setup.sh) for the source paths it reads and how to override
-them.

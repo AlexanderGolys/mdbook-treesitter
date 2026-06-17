@@ -1,10 +1,15 @@
 [book]
-title = "mdbook-treesitter languages example"
+title = "mdbook-treesitter"
 src = "src"
 
 # Every grammar is loaded dynamically from a compiled parser + highlights query.
 # Run ./setup.sh first to stage parsers/ and queries/ (both gitignored).
+#
+# `after = ["links"]` runs this after mdBook's built-in include preprocessor, so
+# any configured-language block inside content pulled in via {{#include}} (the
+# root README.md / CONTRIBUTING.md) is highlighted too.
 [preprocessor.treesitter]
+after = ["links"]
 # inject = true   # (default) highlight languages embedded via injections queries
 
 [preprocessor.treesitter.languages.macaulay2]
