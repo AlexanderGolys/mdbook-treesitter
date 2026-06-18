@@ -1,6 +1,6 @@
 [package]
 name = "mdbook-tsitter"
-version = "0.1.1"
+version = "1.0.0"
 edition = "2021"
 description = "An mdBook preprocessor that highlights fenced code blocks with tree-sitter, for any language with a tree-sitter grammar."
 license = "MIT OR Apache-2.0"
@@ -10,7 +10,7 @@ categories = ["command-line-utilities", "text-processing"]
 readme = "README.md"
 # Keep example/test books out of the published package — they need external
 # parser binaries and queries and only make sense from the git repo.
-exclude = ["/examples"]
+exclude = ["/examples", "/docs"]
 
 [[bin]]
 name = "mdbook-tsitter"
