@@ -95,7 +95,7 @@ Per language, under `[preprocessor.tsitter.languages.<name>]`:
 
 | key          | required | meaning                                                                       |
 | ------------ | -------- | ----------------------------------------------------------------------------- |
-| `library`    | yes      | Path to the compiled parser shared object.                                    |
+| `library`    | yes      | Path to the compiled parser shared object (`.so` / `.dylib` / `.dll`).        |
 | `highlights` | yes      | Path to the highlights query (`highlights.scm`).                              |
 | `symbol`     | no       | Parser constructor symbol; defaults to `tree_sitter_<name>` (`-` → `_`).      |
 | `injections` | no       | Path to an injections query, for embedded languages.                          |
@@ -114,6 +114,10 @@ git clone https://github.com/<owner>/tree-sitter-nix
 cd tree-sitter-nix
 tree-sitter build --output libtree-sitter-nix.so
 ```
+
+On Windows that build produces a `.dll` (and a `.dylib` on macOS); name the
+output and point `library` at that file accordingly. The extension is never
+assumed — whatever path you put in `book.toml` is loaded as-is.
 
 The highlights query is the grammar's `queries/highlights.scm`. An existing
 [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) install is

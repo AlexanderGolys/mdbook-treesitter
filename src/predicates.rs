@@ -156,10 +156,12 @@ fn translate_percent(class: char, in_set: bool) -> String {
     };
     let negated = class.is_ascii_uppercase();
     match (in_set, negated) {
-        // Negated classes have no in-set spelling; emit a standalone class even
-        // inside a set is not valid, so callers only negate outside sets in
-        // practice. Emit a standalone negated class.
+        // Negation has no bare in-set form, so it is always a standalone
+        // `[^...]`. Real highlight queries only ever negate outside a set, so
+        // the nested `[[^...]]` this would yield inside one does not arise.
         (_, true) => format!("[^{ranges}]"),
+        // Inside an existing set, contribute just the range body; standalone,
+        // wrap it in its own set.
         (true, false) => ranges.to_string(),
         (false, false) => format!("[{ranges}]"),
     }

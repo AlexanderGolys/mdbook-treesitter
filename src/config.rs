@@ -47,7 +47,8 @@ impl Default for Config {
 /// One dynamically loaded grammar.
 #[derive(Debug, Deserialize)]
 pub struct LanguageConfig {
-    /// Path to the compiled parser shared object.
+    /// Path to the compiled parser shared object (`.so` on Linux, `.dylib` on
+    /// macOS, `.dll` on Windows).
     pub library: Option<String>,
     /// The parser's exported constructor symbol; defaults to
     /// `tree_sitter_<name>` (with `-` mapped to `_`).

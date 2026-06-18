@@ -22,5 +22,5 @@ committed. [`setup.sh`](setup.sh) stages them into `parsers/` and `queries/`
 
 ```sh
 ./setup.sh          # stage parsers + queries (override sources via env vars)
-mdbook build        # uses the mdbook-treesitter binary on your PATH
+mdbook build        # uses the mdbook-tsitter binary on your PATH
 ```

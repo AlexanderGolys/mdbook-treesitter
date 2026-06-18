@@ -94,10 +94,7 @@ fn render_block(block: &OpenBlock, registry: &Registry) -> Option<String> {
     let highlighted = match registry.highlight(&block.lang, &block.code)? {
         Ok(html) => html,
         Err(error) => {
-            eprintln!(
-                "mdbook-tsitter: skipping `{}` block: {error:#}",
-                block.lang
-            );
+            eprintln!("mdbook-tsitter: skipping `{}` block: {error:#}", block.lang);
             return None;
         }
     };

@@ -16,7 +16,7 @@ use std::process;
 use anyhow::{Context, Result};
 use clap::{Parser, Subcommand};
 use mdbook_preprocessor::{self, Preprocessor, MDBOOK_VERSION};
-use mdbook_treesitter::TreeSitterPreprocessor;
+use mdbook_tsitter::TreeSitterPreprocessor;
 use semver::{Version, VersionReq};
 
 #[derive(Parser)]
@@ -64,7 +64,7 @@ fn preprocess(preprocessor: &dyn Preprocessor) -> Result<()> {
         VersionReq::parse(MDBOOK_VERSION).context("parsing supported mdBook version")?;
     if !supported.matches(&book_version) {
         eprintln!(
-            "mdbook-treesitter: built against mdBook {MDBOOK_VERSION}, running under {} — continuing",
+            "mdbook-tsitter: built against mdBook {MDBOOK_VERSION}, running under {} — continuing",
             ctx.mdbook_version,
         );
     }
@@ -156,7 +156,7 @@ fn render_block(block: &OpenBlock, registry: &Registry) -> Option<String> {
         Ok(html) => html,
         Err(error) => {
             eprintln!(
-                "mdbook-treesitter: skipping `{}` block: {error:#}",
+                "mdbook-tsitter: skipping `{}` block: {error:#}",
                 block.lang
             );
             return None;

@@ -18,7 +18,7 @@ use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
 use crate::config::Config;
 use crate::grammar::Registry;
 
-/// The preprocessor entry point registered with mdBook as `treesitter`.
+/// The preprocessor entry point registered with mdBook as `tsitter`.
 pub struct TreeSitterPreprocessor;
 
 impl Preprocessor for TreeSitterPreprocessor {

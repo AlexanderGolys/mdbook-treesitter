@@ -10,10 +10,11 @@
 //! classes as the host language.
 
 use std::collections::HashMap;
+use std::fs;
 use std::path::{Path, PathBuf};
 
 use anyhow::{anyhow, Context, Result};
-use libloading::Library;
+use libloading::{Library, Symbol};
 use tree_sitter::Language;
 use tree_sitter_highlight::{Highlight, HighlightConfiguration, Highlighter, HtmlRenderer};
 use tree_sitter_language::LanguageFn;
@@ -52,7 +53,16 @@ impl Registry {
             configs.push(cfg);
             libraries.push(library);
             for alias in aliases_of(name, lang_cfg) {
-                by_alias.entry(alias.to_string()).or_insert(index);
+                if by_alias
+                    .get(alias)
+                    .is_some_and(|&existing| existing != index)
+                {
+                    return Err(anyhow!(
+                        "fence tag `{alias}` is claimed by more than one language; \
+                         give each grammar distinct aliases"
+                    ));
+                }
+                by_alias.insert(alias.to_string(), index);
             }
         }
 
@@ -142,6 +152,10 @@ fn union_capture_names(configs: &[HighlightConfiguration]) -> Vec<String> {
     names
 }
 
+/// Prefix of the exported constructor symbol that tree-sitter parsers use, e.g.
+/// `tree_sitter_rust`. Overridable per language via the `symbol` config key.
+const SYMBOL_PREFIX: &str = "tree_sitter_";
+
 /// Load a grammar from a compiled parser shared library, as configured in
 /// `book.toml`. `root` is the book project root that relative paths resolve
 /// against. Returns the configuration and the library that backs it (which the
@@ -163,7 +177,7 @@ fn load_dynamic(
     let symbol = cfg
         .symbol
         .clone()
-        .unwrap_or_else(|| format!("tree_sitter_{}", name.replace('-', "_")));
+        .unwrap_or_else(|| format!("{SYMBOL_PREFIX}{}", name.replace('-', "_")));
 
     // SAFETY: we load a tree-sitter parser whose exported symbol is the standard
     // `extern "C" fn() -> *const ()` language constructor. The library is
@@ -171,7 +185,7 @@ fn load_dynamic(
     let library = unsafe { Library::new(&library_path) }
         .with_context(|| format!("loading parser `{}`", library_path.display()))?;
     let language: Language = unsafe {
-        let constructor: libloading::Symbol<unsafe extern "C" fn() -> *const ()> =
+        let constructor: Symbol<unsafe extern "C" fn() -> *const ()> =
             library.get(symbol.as_bytes()).with_context(|| {
                 format!("symbol `{symbol}` not found in {}", library_path.display())
             })?;
@@ -209,7 +223,7 @@ fn resolve(root: &Path, path: &str) -> PathBuf {
 
 fn read_query(root: &Path, path: &str, lang: &str, kind: &str) -> Result<String> {
     let full = resolve(root, path);
-    std::fs::read_to_string(&full)
+    fs::read_to_string(&full)
         .with_context(|| format!("reading {kind} query for `{lang}` from {}", full.display()))
 }
 
@@ -217,7 +231,7 @@ fn read_optional_query(root: &Path, path: Option<&String>) -> Result<String> {
     match path {
         Some(p) => {
             let full = resolve(root, p);
-            std::fs::read_to_string(&full)
+            fs::read_to_string(&full)
                 .with_context(|| format!("reading query from {}", full.display()))
         }
         None => Ok(String::new()),

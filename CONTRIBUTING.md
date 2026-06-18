@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest in `mdbook-treesitter`. The crate is deliberately
+Thanks for your interest in `mdbook-tsitter`. The crate is deliberately
 small and grammar-agnostic — it ships no grammar of its own and highlights
 whatever you configure in `book.toml`.
 
@@ -25,7 +25,7 @@ locally rather than committed:
 ```sh
 cd examples/languages
 ./setup.sh            # stage parsers/ and queries/ (gitignored)
-mdbook build          # needs the mdbook-treesitter binary on PATH
+mdbook build          # needs the mdbook-tsitter binary on PATH
 ```
 
 `setup.sh` copies parsers and queries from a local nvim-treesitter install by
