@@ -8,7 +8,7 @@ use std::process;
 use anyhow::{Context, Result};
 use clap::{Parser, Subcommand};
 use mdbook_preprocessor::{self, Preprocessor, MDBOOK_VERSION};
-use mdbook_treesitter::TreeSitterPreprocessor;
+use mdbook_tsitter::TreeSitterPreprocessor;
 use semver::{Version, VersionReq};
 
 #[derive(Parser)]
@@ -30,7 +30,7 @@ enum Command {
         renderer: String,
     },
     /// Print the default theme to stdout, e.g.
-    /// `mdbook-treesitter css > theme/treesitter.css`, then reference it from
+    /// `mdbook-tsitter css > theme/treesitter.css`, then reference it from
     /// `[output.html] additional-css`.
     Css,
 }
@@ -64,7 +64,7 @@ fn preprocess(preprocessor: &dyn Preprocessor) -> Result<()> {
         VersionReq::parse(MDBOOK_VERSION).context("parsing supported mdBook version")?;
     if !supported.matches(&book_version) {
         eprintln!(
-            "mdbook-treesitter: built against mdBook {MDBOOK_VERSION}, running under {} — continuing",
+            "mdbook-tsitter: built against mdBook {MDBOOK_VERSION}, running under {} — continuing",
             ctx.mdbook_version,
         );
     }

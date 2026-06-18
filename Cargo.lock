@@ -218,7 +218,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "mdbook-treesitter"
+name = "mdbook-tsitter"
 version = "0.1.0"
 dependencies = [
  "anyhow",

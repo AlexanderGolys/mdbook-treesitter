@@ -1,4 +1,4 @@
-# mdbook-treesitter
+# mdbook-tsitter
 
 An [mdBook](https://rust-lang.github.io/mdBook/) preprocessor that highlights
 fenced code blocks with [tree-sitter](https://tree-sitter.github.io/). It is
@@ -50,19 +50,19 @@ let runnable = "mdBook still adds the Run button and hides this line";
 ## Install
 
 ```sh
-cargo install mdbook-treesitter
+cargo install mdbook-tsitter
 ```
 
-The `mdbook-treesitter` binary must be on your `PATH`.
+The `mdbook-tsitter` binary must be on your `PATH`.
 
 ## Set up a book
 
 1. Enable the preprocessor and configure a language in `book.toml`:
 
    ```toml
-   [preprocessor.treesitter]
+   [preprocessor.tsitter]
 
-   [preprocessor.treesitter.languages.rust]
+   [preprocessor.tsitter.languages.rust]
    library = "parsers/rust.so"            # compiled parser, relative to the book root
    highlights = "queries/rust/highlights.scm"
    ```
@@ -70,7 +70,7 @@ The `mdbook-treesitter` binary must be on your `PATH`.
 2. Write the default theme into your book and reference it:
 
    ```sh
-   mdbook-treesitter css > theme/treesitter.css
+   mdbook-tsitter css > theme/treesitter.css
    ```
 
    ```toml
@@ -83,7 +83,7 @@ covering several languages and injection.
 
 ## Configuration
 
-Everything lives under `[preprocessor.treesitter]` in `book.toml`.
+Everything lives under `[preprocessor.tsitter]` in `book.toml`.
 
 Top-level:
 
@@ -91,7 +91,7 @@ Top-level:
 | -------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `inject` | `true`  | Highlight languages embedded in a block via a grammar's injections query. Only configured languages are ever used; injection never loads a new grammar. Set `false` to switch it off (and skip loading `injections.scm`, so a broken injections query can't break highlighting). |
 
-Per language, under `[preprocessor.treesitter.languages.<name>]`:
+Per language, under `[preprocessor.tsitter.languages.<name>]`:
 
 | key          | required | meaning                                                                       |
 | ------------ | -------- | ----------------------------------------------------------------------------- |
@@ -135,7 +135,7 @@ ones override:
 
 Captures whose name starts with `_` are treated as internal and not styled.
 
-The default stylesheet (`mdbook-treesitter css`) styles the
+The default stylesheet (`mdbook-tsitter css`) styles the
 [standard tree-sitter / nvim-treesitter capture names](https://github.com/nvim-treesitter/nvim-treesitter/blob/main/CONTRIBUTING.md#highlights)
 (`@comment`, `@keyword`, `@string`, `@function`, `@type`, `@variable`, …), so a
 grammar whose query uses those names is styled out of the box. Add rules for any

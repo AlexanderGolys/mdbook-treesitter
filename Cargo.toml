@@ -1,5 +1,5 @@
 [package]
-name = "mdbook-treesitter"
+name = "mdbook-tsitter"
 version = "0.1.0"
 edition = "2021"
 description = "An mdBook preprocessor that highlights fenced code blocks with tree-sitter, for any language with a tree-sitter grammar."
@@ -13,7 +13,7 @@ readme = "README.md"
 exclude = ["/examples"]
 
 [[bin]]
-name = "mdbook-treesitter"
+name = "mdbook-tsitter"
 path = "src/main.rs"
 
 [dependencies]

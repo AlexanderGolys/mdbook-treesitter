@@ -95,7 +95,7 @@ fn render_block(block: &OpenBlock, registry: &Registry) -> Option<String> {
         Ok(html) => html,
         Err(error) => {
             eprintln!(
-                "mdbook-treesitter: skipping `{}` block: {error:#}",
+                "mdbook-tsitter: skipping `{}` block: {error:#}",
                 block.lang
             );
             return None;

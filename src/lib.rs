@@ -1,6 +1,6 @@
 //! An mdBook preprocessor that highlights fenced code blocks with tree-sitter.
 //!
-//! Each language is configured in the `[preprocessor.treesitter]` table of
+//! Each language is configured in the `[preprocessor.tsitter]` table of
 //! `book.toml` by pointing at a compiled parser and a highlights query, and is
 //! then loaded dynamically — see [`config`]. The preprocessor is grammar-
 //! agnostic: it ships no grammar of its own.
@@ -23,7 +23,7 @@ pub struct TreeSitterPreprocessor;
 
 impl Preprocessor for TreeSitterPreprocessor {
     fn name(&self) -> &str {
-        "treesitter"
+        "tsitter"
     }
 
     fn run(&self, ctx: &PreprocessorContext, mut book: Book) -> Result<Book> {

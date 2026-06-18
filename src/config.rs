@@ -1,10 +1,10 @@
-//! The `[preprocessor.treesitter]` section of `book.toml`.
+//! The `[preprocessor.tsitter]` section of `book.toml`.
 //!
 //! ```toml
-//! [preprocessor.treesitter]
+//! [preprocessor.tsitter]
 //!
 //! # Add a language by pointing at a compiled parser and a highlights query.
-//! [preprocessor.treesitter.languages.nix]
+//! [preprocessor.tsitter.languages.nix]
 //! library = "parsers/libtree-sitter-nix.so"   # compiled grammar (relative to book root)
 //! highlights = "queries/nix/highlights.scm"    # tree-sitter highlights query
 //! # symbol = "tree_sitter_nix"                 # optional; defaults to tree_sitter_<name>
@@ -68,8 +68,8 @@ impl Config {
     /// an empty configuration when the section is absent.
     pub fn from_context(ctx: &PreprocessorContext) -> Result<Self> {
         ctx.config
-            .get::<Self>("preprocessor.treesitter")
-            .context("invalid [preprocessor.treesitter] configuration")
+            .get::<Self>("preprocessor.tsitter")
+            .context("invalid [preprocessor.tsitter] configuration")
             .map(Option::unwrap_or_default)
     }
 }

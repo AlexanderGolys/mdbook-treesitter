@@ -1,5 +1,5 @@
 [book]
-title = "mdbook-treesitter"
+title = "mdbook-tsitter"
 src = "src"
 
 # Every grammar is loaded dynamically from a compiled parser + highlights query.
@@ -8,28 +8,28 @@ src = "src"
 # `after = ["links"]` runs this after mdBook's built-in include preprocessor, so
 # any configured-language block inside content pulled in via {{#include}} (the
 # root README.md / CONTRIBUTING.md) is highlighted too.
-[preprocessor.treesitter]
+[preprocessor.tsitter]
 after = ["links"]
 # inject = true   # (default) highlight languages embedded via injections queries
 
-[preprocessor.treesitter.languages.macaulay2]
+[preprocessor.tsitter.languages.macaulay2]
 library = "parsers/macaulay2.so"
 highlights = "queries/macaulay2/highlights.scm"
 aliases = ["m2", "macaulay2"]
 
-[preprocessor.treesitter.languages.rust]
+[preprocessor.tsitter.languages.rust]
 library = "parsers/rust.so"
 highlights = "queries/rust/highlights.scm"
 
-[preprocessor.treesitter.languages.lua]
+[preprocessor.tsitter.languages.lua]
 library = "parsers/lua.so"
 highlights = "queries/lua/highlights.scm"
 
-[preprocessor.treesitter.languages.haskell]
+[preprocessor.tsitter.languages.haskell]
 library = "parsers/haskell.so"
 highlights = "queries/haskell/highlights.scm"
 
-[preprocessor.treesitter.languages.markdown]
+[preprocessor.tsitter.languages.markdown]
 library = "parsers/markdown.so"
 highlights = "queries/markdown/highlights.scm"
 # Injections let a Markdown block sub-highlight the languages of its fenced
