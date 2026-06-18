@@ -8,6 +8,7 @@
 pub mod config;
 pub mod grammar;
 pub mod markdown;
+pub mod predicates;
 pub mod render;
 
 use mdbook_preprocessor::book::{Book, BookItem};

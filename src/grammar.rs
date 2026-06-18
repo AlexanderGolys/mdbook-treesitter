@@ -19,7 +19,7 @@ use tree_sitter_highlight::{Highlight, HighlightConfiguration, Highlighter, Html
 use tree_sitter_language::LanguageFn;
 
 use crate::config::{Config, LanguageConfig};
-use crate::render;
+use crate::{predicates, render};
 
 /// All grammars known to a single preprocessor run. Each grammar is stored once
 /// in `configs` and reachable through every fence tag (alias) in `by_alias`.
@@ -178,15 +178,19 @@ fn load_dynamic(
         LanguageFn::from_raw(*constructor).into()
     };
 
-    let highlights = read_query(root, &cfg.highlights, name, "highlights")?;
+    // Normalise nvim-specific predicates (`#lua-match?`) into standard ones that
+    // tree-sitter-highlight evaluates; otherwise the predicate is ignored and
+    // its capture fires unconditionally (e.g. every identifier becomes a
+    // `@constant`). See [`crate::predicates`].
+    let highlights = predicates::normalize(&read_query(root, &cfg.highlights, name, "highlights")?);
     // With injection off we never read the injections query, so a broken
     // `injections.scm` cannot fail compilation and take `highlights` down with it.
     let injections = if inject {
-        read_optional_query(root, cfg.injections.as_ref())?
+        predicates::normalize(&read_optional_query(root, cfg.injections.as_ref())?)
     } else {
         String::new()
     };
-    let locals = read_optional_query(root, cfg.locals.as_ref())?;
+    let locals = predicates::normalize(&read_optional_query(root, cfg.locals.as_ref())?);
 
     let config = HighlightConfiguration::new(language, name, &highlights, &injections, &locals)
         .with_context(|| format!("invalid tree-sitter queries for `{name}`"))?;
